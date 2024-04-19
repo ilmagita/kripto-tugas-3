@@ -15,8 +15,7 @@ def broadcast(message):
         try:
             client.send(message.encode('ascii'))
         except Exception as e:
-            print('There was an error in broadcasting a message.')
-            print(e)
+            print('There was an error in broadcasting the message {}: {}'.format(message, e))
 
 # handle method
 def handle(client):
@@ -30,6 +29,8 @@ def handle(client):
             client.close()
             nickname = nicknames[index]
             broadcast(f'{nickname} has left the chat.')
+            broadcast(f'Online: {nicknames}')
+            print(f'{nickname} has terminated the connection.')
             nicknames.remove(nickname)
             break
 
@@ -37,22 +38,24 @@ def handle(client):
 def receive():
     while True:
         client, address = server.accept()
-        print(f'Connected with {str(address)}')
+        print(f'New connection accepted from client in {str(address)}')
 
         if client:
-            client.send('NICK'.encode('ascii'))
+            client.send('NICK'.encode('ascii'))             # sends NICK to signal client to send its nickname
             nickname = client.recv(1024).decode('ascii')
             nicknames.append(nickname)
             clients.append(client)
 
-            print(f'Nickname of the client is {nickname}')
-            broadcast(f'{nickname} joined the chat.'.encode('ascii'))
+            print(f'New client added: {nickname}')
+            broadcast(f'{nickname} joined the chat.')
             client.send('You have connected to the server!'.encode('ascii'))
+            client.send(f'\nCurrently online: {nicknames}'.encode('ascii'))
 
             thread = threading.Thread(target=handle, args=(client,))
             thread.start()
         else:
             print('Failed to accept connection.')
 
+print("Server started!")
 print("Server is listening...")
 receive()
