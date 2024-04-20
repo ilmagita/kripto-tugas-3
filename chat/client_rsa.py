@@ -33,7 +33,7 @@ def receive():
     while True:
         print('RECEIVE THREAD')
         try:
-            message = client.recv(1024).decode('ascii')
+            message = client.recv(10240).decode('ascii')
 
             if message == 'NICK':
                 client.send(nickname.encode('ascii'))

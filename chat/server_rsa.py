@@ -22,16 +22,7 @@ def broadcast(message):
 def handle(client):
     while True:
         try:
-            message = client.recv(1024)
-
-            # # check if message is encrypted
-            # parts = message.split(':')
-            # parts = parts[0].split()
-            # keyword = parts[-1]
-            # latest_sender = parts[0]
-
-            # if keyword == 'ENC':
-            #     broadcast(f'{latest_sender} sent an encrypted message.')
+            message = client.recv(10240)
             broadcast(message.decode('ascii'))
 
         except:
@@ -57,7 +48,7 @@ def receive():
             client.send('NICK'.encode('ascii'))             # sends NICK to signal client to send its nickname
             # client will send nickname (see client_rsa.py)
 
-            nickname = client.recv(1024).decode('ascii')
+            nickname = client.recv(10240).decode('ascii')
             nicknames.append(nickname)
             clients.append(client)
 
