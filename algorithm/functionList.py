@@ -80,7 +80,7 @@ def random_prime_number():
         number = random.randint(1,9999999999)
     return number
 
-def save_key_file(key,fileName):
+def save_key_file(key, fileName):
     with open(fileName, 'w') as f:
         f.write(str(key))
         

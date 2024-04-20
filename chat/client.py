@@ -1,11 +1,24 @@
 import socket
 import threading
 from . config import host, port
+from algorithm import RSA, functionList as fl
 from datetime import datetime
+
+import os
+
+# get the directory of the current script
+current_dir = os.path.dirname(os.path.abspath(__file__))
+key_dir = os.path.join(current_dir, 'key')
+
+privKey_path = os.path.join(current_dir, 'key', 'key.pri')
+pubKey_path = os.path.join(current_dir, 'key', 'key.pub')
 
 import tkinter
 import tkinter.scrolledtext
 from tkinter import simpledialog
+
+pubKey = fl.read_key_file('key/ken1.pub')
+privKey = fl.read_key_file('key/ken1.pri')
 
 # get the current date and time
 current_time = datetime.now()
@@ -50,9 +63,17 @@ class Client:
         self.text_area.pack(padx=20, pady=5)
         self.text_area.config(state='disabled')
 
-        self.send_button = tkinter.Button(self.win, text='Send', command=self.write)
+        button_frame = tkinter.Frame(self.win, bg="lightgray")
+        button_frame.pack(pady=5)
+
+        self.send_button = tkinter.Button(button_frame, text='Send', command=self.write)
+        
         self.send_button.config(font=('Arial', 12))
-        self.send_button.pack(padx=20, pady=5)
+        self.send_button.pack(side='left', padx=20, pady=5)
+
+        self.decrypt_button = tkinter.Button(button_frame, text='Decrypt', command=self.decrypt)
+        self.decrypt_button.config(font=('Arial', 12))
+        self.decrypt_button.pack(side="left", padx=10, pady=5)
 
         self.msg_label = tkinter.Label(self.win, text="Message:", bg="lightgray")
         self.msg_label.config(font=("Arial", 12))
@@ -80,7 +101,6 @@ class Client:
 
             except ConnectionAbortedError:
                 print('An error occured while connecting to the server! Your connection has been terminated.')
-                # self.socket.close()
                 break
 
             except Exception as e:
@@ -95,8 +115,14 @@ class Client:
         exit(0)
 
     def write(self):
-        message = f"{self.nickname}: {self.input_area.get('1.0', 'end')}"
+        plaintext = self.input_area.get('1.0', 'end')
+        enc = RSA.rsa_encrypt(plaintext, pubKey)
+
+        message = f"{self.nickname}: {enc}"
         self.sock.send(message.encode('utf-8'))
         self.input_area.delete('1.0', 'end')
+
+    def decrypt(self):
+        pass
 
 client = Client(host, port)
