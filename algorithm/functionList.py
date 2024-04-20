@@ -139,7 +139,6 @@ def get_base_file_name(filepath):
 #print(read_key_file("ken1.pub"))
 
 
-
 #x = min_binary_length(12)
 #y = (max_binary_length(12))
 

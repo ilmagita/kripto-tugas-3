@@ -29,9 +29,9 @@ def handle(client):
             client.close()
             nickname = nicknames[index]
 
-            broadcast(f'{nickname} has left the chat.')
-            broadcast(f'Online: {nicknames}')
-            print(f'{nickname} has terminated the connection.')
+            broadcast(f'{nickname} has left the chat.\n')
+            broadcast(f'Online: {nicknames}\n')
+            print(f'{nickname} has terminated the connection.\n')
             nicknames.remove(nickname)
             break
 
@@ -48,7 +48,7 @@ def receive():
             clients.append(client)
 
             print(f'New client added: {nickname}')
-            broadcast(f'{nickname} joined the chat.')
+            broadcast(f'{nickname} joined the chat.\n\n')
             client.send('You have connected to the server!'.encode('utf-8'))
             client.send(f'\nCurrently online: {nicknames}'.encode('utf-8'))
 

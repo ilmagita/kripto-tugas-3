@@ -9,7 +9,6 @@ import os
 # get the directory of the current script
 current_dir = os.path.dirname(os.path.abspath(__file__))
 key_dir = os.path.join(current_dir, 'key')
-
 privKey_path = os.path.join(current_dir, 'key', 'key.pri')
 pubKey_path = os.path.join(current_dir, 'key', 'key.pub')
 
@@ -17,17 +16,14 @@ import tkinter
 import tkinter.scrolledtext
 from tkinter import simpledialog
 
-pubKey = fl.read_key_file('key/ken1.pub')
-privKey = fl.read_key_file('key/ken1.pri')
+pubKey = fl.read_key_file(privKey_path)
+privKey = fl.read_key_file(pubKey_path)
 
 # get the current date and time
 current_time = datetime.now()
-
-# format the date and time into YYYY-MM-DD HH:MM format
 formatted_time = current_time.strftime('%H:%M')
 
 class Client:
-    
     def __init__(self, host, port):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.connect((host, port))
@@ -113,16 +109,33 @@ class Client:
         self.win.destroy()
         self.sock.close()
         exit(0)
-
+    
     def write(self):
         plaintext = self.input_area.get('1.0', 'end')
         enc = RSA.rsa_encrypt(plaintext, pubKey)
 
-        message = f"{self.nickname}: {enc}"
+        message = f"{self.nickname} (ENC): {enc}\n"
         self.sock.send(message.encode('utf-8'))
         self.input_area.delete('1.0', 'end')
 
     def decrypt(self):
-        pass
+        self.text_area.config(state='normal')
+        latest_msg = self.text_area.get('1.0', tkinter.END)
+        self.text_area.config(state='disabled')
+
+        # Find the index of the last space
+        last_space_index = latest_msg.rfind(' ')
+        cipher = latest_msg[last_space_index + 1:]
+
+        dec = RSA.rsa_decrypt(cipher, privKey)
+
+        dec_msg = f'Decrypted message: {dec}\n\n'
+        # test_msg = f'Latest message: {cipher}\n\n'
+
+        self.text_area.config(state='normal')
+        # self.text_area.insert('end', test_msg)
+        self.text_area.insert('end', dec_msg)
+        self.text_area.yview('end')
+        self.text_area.config(state='disabled')
 
 client = Client(host, port)
