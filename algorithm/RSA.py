@@ -1,7 +1,6 @@
 import sympy
 import random
-from functionList import *
-
+from . functionList import *
 
 def public_key(p, q, e):
     return (e, p*q)
@@ -25,12 +24,14 @@ def generate_key(fileName):
         
     pubKey = public_key(p,q,e)
     privKey = private_key(p,q,e)
-    save_key_file(pubKey,f'{fileName}.pub')
-    save_key_file(privKey,f'{fileName}.pri')
+
+    filepath = os.path.join(key_dir, fileName)
+
+    save_key_file(pubKey,f'{filepath}.pub')
+    save_key_file(privKey,f'{filepath}.pri')
 
 def rsa_encrypt(plain,pubKey):
     e,n = pubKey
-    plain =plain.upper().replace(" ",'')
     cipher = ''.join(hex(pow(ord(char),e,n)) for char in plain)
     return utf8_to_base64(str(cipher))
     
@@ -84,22 +85,29 @@ def rsa_dec_binary_file(fileName,priKey):
     save_binary_file(plain, f'{filename_ori}_rsa_decrypted{filename_type}')
     return plain
 
-#generate_key('ken1')
-pubKey = read_key_file('ken1.pub')
-privKey = read_key_file('ken1.pri')
-
 #print(type(rsa_enc_binary_file("ESP32.png",pubKey)))
 #print(rsa_enc_binary_file("ESP32.png",pubKey))
 #print(rsa_dec_binary_file("ESP32_rsa_encrypted.png",privKey))
 #rsa_enc_text_file("tes.txt",pubKey)
 #rsa_dec_text_file("tes_rsa_encrypted.txt",privKey)
 
-"""
-cipher = rsa_encrypt("HELLO WORLD",pubKey)
-plain = rsa_decrypt(cipher,privKey)
+
+# get the directory of the current script
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# go back up one folder
+parent_dir = os.path.dirname(current_dir)
+chat_dir = os.path.join(parent_dir, 'chat')
+key_dir = os.path.join(chat_dir, 'key')
+
+privKey_path = os.path.join(key_dir, 'key.pri')
+pubKey_path = os.path.join(key_dir, 'key.pub')
+pubKey = read_key_file(privKey_path)
+privKey = read_key_file(pubKey_path)
+
+cipher = rsa_encrypt("hello world", pubKey)
+plain = rsa_decrypt(cipher, privKey)
 print(cipher)
 print(plain)
-"""
 
 
 

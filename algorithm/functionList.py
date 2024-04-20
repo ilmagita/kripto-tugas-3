@@ -80,7 +80,7 @@ def random_prime_number():
         number = random.randint(1,9999999999)
     return number
 
-def save_key_file(key,fileName):
+def save_key_file(key, fileName):
     with open(fileName, 'w') as f:
         f.write(str(key))
         
@@ -137,7 +137,6 @@ def get_base_file_name(filepath):
     return basename_without_extension
     
 #print(read_key_file("ken1.pub"))
-
 
 
 #x = min_binary_length(12)
