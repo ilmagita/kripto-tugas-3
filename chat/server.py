@@ -28,11 +28,12 @@ def handle(client):
             clients.remove(client)
             client.close()
             nickname = nicknames[index]
+            nicknames.remove(nickname)
 
             broadcast(f'{nickname} has left the chat.\n')
             broadcast(f'Online: {nicknames}\n')
             print(f'{nickname} has terminated the connection.\n')
-            nicknames.remove(nickname)
+
             break
 
 # receive method

@@ -4,13 +4,9 @@ from . config import host, port
 from algorithm import RSA, functionList as fl
 from datetime import datetime
 
-import os
+from algorithm.RSA import privKey_path, pubKey_path
 
-# get the directory of the current script
-current_dir = os.path.dirname(os.path.abspath(__file__))
-key_dir = os.path.join(current_dir, 'key')
-privKey_path = os.path.join(current_dir, 'key', 'key.pri')
-pubKey_path = os.path.join(current_dir, 'key', 'key.pub')
+import os
 
 import tkinter
 import tkinter.scrolledtext
