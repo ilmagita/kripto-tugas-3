@@ -1,19 +1,18 @@
 import socket
 import threading
-from config import host, port
+from . import config
 from datetime import datetime
 
 import sys
 
 ### TODO: bikin sys.path.append ini ilang pake packaging import module things gue ga bisa mikir
-sys.path.append('../algorithm') 
+# sys.path.append('../algorithm') 
 
-import functionList as fl
-import rsa as rsa
+from algorithm import functionList as fl, rsa
 
 # algorithm
-pubKey = fl.read_key_file('../algorithm/ilma.pub')
-privKey = fl.read_key_file('../algorithm/ilma.pri')
+pubKey = fl.read_key_file('algorithm/ilma.pub')
+privKey = fl.read_key_file('algorithm/ilma.pri')
 
 # Get the current date and time
 current_time = datetime.now()
@@ -25,7 +24,7 @@ nickname = input('Choose a nickname: ')
 
 try:
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client.connect((host, port))
+    client.connect((config.host, config.port))
 except Exception as e:
     print(f'An error occured: {e}')
     print(f'Have you started the server yet?')

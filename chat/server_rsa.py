@@ -1,9 +1,9 @@
 import threading
 import socket
-from config import host, port
+from . import config
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind((host, port))
+server.bind((config.host, config.port))
 server.listen()     # server is now on listening method
 
 clients = []

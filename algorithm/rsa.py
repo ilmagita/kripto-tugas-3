@@ -1,6 +1,6 @@
 import sympy
 import random
-from functionList import *
+from . import functionList as fl
 
 def public_key(p, q, e):
     """
@@ -24,21 +24,21 @@ def generate_key(fileName):
     """
 
     e_list = [3, 5, 17, 65537]
-    p = random_prime_number()
-    q = random_prime_number()
-    e = random_prime_number()
+    p = fl.random_prime_number()
+    q = fl.random_prime_number()
+    e = fl.random_prime_number()
     
     totient = (p-1) * (q-1)
     
-    while not are_relatife_prime(e,totient):
-        p = random_prime_number()
-        q = random_prime_number()
+    while not fl.are_relatife_prime(e,totient):
+        p = fl.random_prime_number()
+        q = fl.random_prime_number()
         e = random.choice(e_list)
         
     pubKey = public_key(p,q,e)
     privKey = private_key(p,q,e)
-    save_key_file(pubKey, f'{fileName}.pub')
-    save_key_file(privKey, f'{fileName}.pri')
+    fl.save_key_file(pubKey, f'{fileName}.pub')
+    fl.save_key_file(privKey, f'{fileName}.pri')
 
 def rsa_encrypt(plain,pubKey):
     """
@@ -48,7 +48,7 @@ def rsa_encrypt(plain,pubKey):
     e, n = pubKey
     # plain = plain.upper().replace(" ",'')
     cipher = ''.join(hex(pow(ord(char),e,n)) for char in plain)
-    return utf8_to_base64(str(cipher))
+    return fl.utf8_to_base64(str(cipher))
     
 def rsa_decrypt(cipher, privKey):
     """
@@ -56,7 +56,7 @@ def rsa_decrypt(cipher, privKey):
     """
 
     d,n = privKey
-    cipher = base64_to_utf8(cipher).split('0x')
+    cipher = fl.base64_to_utf8(cipher).split('0x')
     cipher = cipher[1:]
     plain = [pow(int('0x'+c,16),d,n) for c in cipher]
     plaintext = "".join(chr(p) for p in plain)
@@ -67,13 +67,13 @@ def rsa_enc_text_file(fileName, pubKey):
     Encrypts base64 text files only using RSA algorithm.
     """
 
-    filename_type = get_file_type(fileName)
-    filename_ori = get_base_file_name(fileName)
+    filename_type = fl.get_file_type(fileName)
+    filename_ori = fl.get_base_file_name(fileName)
 
-    plain = read_text_file(fileName)
-    result = rsa_encrypt(plain,pubKey)
+    plain = fl.read_text_file(fileName)
+    result = fl.rsa_encrypt(plain, pubKey)
 
-    save_text_file(result, f'{filename_ori}_rsa_encrypted{filename_type}')
+    fl.save_text_file(result, f'{filename_ori}_rsa_encrypted{filename_type}')
 
     # return result
 
@@ -82,12 +82,12 @@ def rsa_dec_text_file(fileName, priKey):
     Decrypts base64 text files only using RSA algorithm.
     """
 
-    filename_type = get_file_type(fileName)
-    filename_ori = get_base_file_name(fileName)
-    plain = read_text_file(fileName)
-    result = rsa_decrypt(plain,priKey)
+    filename_type = fl.get_file_type(fileName)
+    filename_ori = fl.get_base_file_name(fileName)
+    plain = fl.read_text_file(fileName)
+    result = fl.rsa_decrypt(plain,priKey)
 
-    save_text_file(result, f'{filename_ori}_rsa_decrypted{filename_type}')
+    fl.save_text_file(result, f'{filename_ori}_rsa_decrypted{filename_type}')
 
     # return result
 
@@ -96,15 +96,15 @@ def rsa_enc_binary_file(fileName, pubKey):
     Encrypts binary file that aren't .txt.
     """
 
-    filename_type = get_file_type(fileName)
-    filename_ori = get_base_file_name(fileName)
+    filename_type = fl.get_file_type(fileName)
+    filename_ori = fl.get_base_file_name(fileName)
     
-    plain = read_binary_file(fileName)
+    plain = fl.read_binary_file(fileName)
     e,n = pubKey
-    plain = binary_data_to_int_array(plain)
+    plain = fl.binary_data_to_int_array(plain)
     cipher = [pow(num,e,n) for num in plain]
-    cipher = int_array_to_binary_data(cipher)
-    save_binary_file(cipher, f'{filename_ori}_rsa_encrypted{filename_type}')
+    cipher = fl.int_array_to_binary_data(cipher)
+    fl.save_binary_file(cipher, f'{filename_ori}_rsa_encrypted{filename_type}')
 
     # return cipher
 
@@ -113,19 +113,25 @@ def rsa_dec_binary_file(fileName, priKey):
     Decrypts binary file.
     """
 
-    filename_type = get_file_type(fileName)
-    filename_ori = get_base_file_name(fileName)
+    filename_type = fl.get_file_type(fileName)
+    filename_ori = fl.get_base_file_name(fileName)
     
-    cipher = read_binary_file(fileName)
+    cipher = fl.read_binary_file(fileName)
     d,n = priKey
-    cipher = binary_data_to_int_array(cipher)
+    cipher = fl.binary_data_to_int_array(cipher)
     plain = [pow(num,d,n) for num in cipher]
-    plain = int_array_to_binary_data(plain)
-    save_binary_file(plain, f'{filename_ori}_rsa_decrypted{filename_type}')
+    plain = fl.int_array_to_binary_data(plain)
+    fl.save_binary_file(plain, f'{filename_ori}_rsa_decrypted{filename_type}')
 
-# generate_key('ilma')
-# pubKey = read_key_file('ilma.pub')
-# privKey = read_key_file('ilma.pri')
+generate_key('ilma')
+pubKey = fl.read_key_file('ilma.pub')
+privKey = fl.read_key_file('ilma.pri')
+
+msg = 'Apa kabar'
+enc = rsa_encrypt(msg, pubKey)
+print(enc)
+dec = rsa_decrypt(enc, privKey)
+print(dec)
 
 # rsa_enc_binary_file('../inputs/ESP32.png', pubKey)
 # rsa_dec_binary_file('../inputs/ESP32_rsa_encrypted.png', privKey)
@@ -139,7 +145,6 @@ plain = rsa_decrypt(cipher,privKey)
 print(cipher)
 print(plain)
 """
-
 
 
     
