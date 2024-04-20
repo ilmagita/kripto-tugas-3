@@ -3,7 +3,13 @@ import threading
 from config import host, port
 from datetime import datetime
 
-from algorithm import rsa, functionList as fl
+import sys
+
+### TODO: bikin sys.path.append ini ilang pake packaging import module things gue ga bisa mikir
+sys.path.append('../algorithm') 
+
+import functionList as fl
+import rsa as rsa
 
 # algorithm
 pubKey = fl.read_key_file('../algorithm/ilma.pub')
@@ -17,8 +23,12 @@ formatted_time = current_time.strftime('%H:%M')
 
 nickname = input('Choose a nickname: ')
 
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect((host, port))
+try:
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client.connect((host, port))
+except Exception as e:
+    print(f'An error occured: {e}')
+    print(f'Have you started the server yet?')
 
 def receive():
     # for receive thread
@@ -37,9 +47,8 @@ def receive():
 def write():
     # for writing thread
     while True:
-        plaintext = input('Enter your message: ')
+        plaintext = input(f'{nickname}, enter your message: ')
         encrypted_message = rsa.rsa_encrypt(plaintext, pubKey)
-        print(encrypted_message)
         message = '{} {}: {}'.format(formatted_time, nickname, encrypted_message)
         client.send(message.encode('ascii'))
 
