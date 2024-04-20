@@ -6,101 +6,96 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>382</width>
-    <height>600</height>
+    <width>394</width>
+    <height>598</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPlainTextEdit" name="plainTextEdit">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>20</x>
+      <y>60</y>
+      <width>351</width>
+      <height>491</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPlainTextEdit" name="chatbox">
+       <property name="plainText">
+        <string>Chat will appear here...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox">
+       <item>
+        <property name="text">
+         <string>Encryption</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Decryption</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="encryptTextBox"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="encryptBtn">
+       <property name="text">
+        <string>Encrypt and send</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="decryptTextBox"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="decryptBtn">
+       <property name="text">
+        <string>Decrypt text</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPlainTextEdit" name="decryptResTextBox"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="title">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
       <y>20</y>
-      <width>321</width>
-      <height>311</height>
+      <width>201</width>
+      <height>16</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>340</y>
-      <width>321</width>
-      <height>23</height>
-     </rect>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
     </property>
     <property name="text">
-     <string>Generate random RSA Key</string>
+     <string>RSA Chat Client</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QLineEdit" name="nickname">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>450</y>
-      <width>321</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Encrypt and send with key</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>420</y>
-      <width>321</width>
+      <x>260</x>
+      <y>20</y>
+      <width>113</width>
       <height>20</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="comboBox">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>390</y>
-      <width>60</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>Encrypt</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Decrypt</string>
-     </property>
-    </item>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>500</y>
-      <width>321</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>530</y>
-      <width>321</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Encrypt file and send with key</string>
     </property>
    </widget>
   </widget>

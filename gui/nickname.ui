@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>262</width>
+    <width>244</width>
     <height>146</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="enterNicknameLabel">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -26,7 +26,7 @@
     <string>Enter a nickname</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="nicknameTextEdit">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -36,7 +36,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="enterChatroomButton">
    <property name="geometry">
     <rect>
      <x>20</x>
