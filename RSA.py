@@ -28,8 +28,6 @@ def generate_key(fileName):
     save_key_file(pubKey,f'{fileName}.pub')
     save_key_file(privKey,f'{fileName}.pri')
 
-
-
 def rsa_encrypt(plain,pubKey):
     e,n = pubKey
     plain =plain.upper().replace(" ",'')
@@ -69,19 +67,19 @@ def rsa_enc_binary_file(fileName,pubKey):
     plain = read_binary_file(fileName)
     e,n = pubKey
     plain = binary_data_to_int_array(plain)
-    cipher = [pow(num,e,n) for num in plain]
-    cipher = int_array_to_binary_data(cipher)
-    save_binary_file(cipher, f'{filename_ori}_rsa_encrypted{filename_type}')
+    print(plain)
+    cipher = [(pow(num,e,n)) for num in plain]
+    #cipher = int_array_to_binary_data(cipher)
+    save_int_file(cipher, f'{filename_ori}_rsa_encrypted{filename_type}')
     return cipher
 
 def rsa_dec_binary_file(fileName,priKey):
     filename_type = get_file_type(fileName)
     filename_ori = get_base_file_name(fileName)
     
-    cipher = read_binary_file(fileName)
+    cipher = read_int_file(fileName)
     d,n = priKey
-    cipher = binary_data_to_int_array(cipher)
-    plain = [pow(num,d,n) for num in cipher]
+    plain = [(pow(num,d,n)) for num in cipher]
     plain = int_array_to_binary_data(plain)
     save_binary_file(plain, f'{filename_ori}_rsa_decrypted{filename_type}')
     return plain
@@ -91,12 +89,8 @@ pubKey = read_key_file('ken1.pub')
 privKey = read_key_file('ken1.pri')
 
 #print(type(rsa_enc_binary_file("ESP32.png",pubKey)))
-print(rsa_enc_binary_file("ESP32.png",pubKey))
-print(rsa_dec_binary_file("ESP32_rsa_encrypted.png",privKey))
-
-
-
-
+#print(rsa_enc_binary_file("ESP32.png",pubKey))
+#print(rsa_dec_binary_file("ESP32_rsa_encrypted.png",privKey))
 #rsa_enc_text_file("tes.txt",pubKey)
 #rsa_dec_text_file("tes_rsa_encrypted.txt",privKey)
 
