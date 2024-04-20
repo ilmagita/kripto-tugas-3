@@ -1,6 +1,7 @@
 import threading
 import socket
 from . import config
+from algorithm import functionList as fl, rsa
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((config.host, config.port))
@@ -22,12 +23,24 @@ def handle(client):
     while True:
         try:
             message = client.recv(1024)
+
+            # # check if message is encrypted
+            # parts = message.split(':')
+            # parts = parts[0].split()
+            # keyword = parts[-1]
+            # latest_sender = parts[0]
+
+            # if keyword == 'ENC':
+            #     broadcast(f'{latest_sender} sent an encrypted message.')
             broadcast(message.decode('ascii'))
+
         except:
+            # handles when a client leaves/terminates their connection
             index = clients.index(client)
             clients.remove(client)
             client.close()
             nickname = nicknames[index]
+
             broadcast(f'{nickname} has left the chat.')
             broadcast(f'Online: {nicknames}')
             print(f'{nickname} has terminated the connection.')
@@ -42,6 +55,8 @@ def receive():
 
         if client:
             client.send('NICK'.encode('ascii'))             # sends NICK to signal client to send its nickname
+            # client will send nickname (see client_rsa.py)
+
             nickname = client.recv(1024).decode('ascii')
             nicknames.append(nickname)
             clients.append(client)

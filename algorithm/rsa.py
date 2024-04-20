@@ -123,15 +123,15 @@ def rsa_dec_binary_file(fileName, priKey):
     plain = fl.int_array_to_binary_data(plain)
     fl.save_binary_file(plain, f'{filename_ori}_rsa_decrypted{filename_type}')
 
-generate_key('ilma')
-pubKey = fl.read_key_file('ilma.pub')
-privKey = fl.read_key_file('ilma.pri')
+# generate_key('ilma')
+# pubKey = fl.read_key_file('ilma.pub')
+# privKey = fl.read_key_file('ilma.pri')
 
-msg = 'Apa kabar'
-enc = rsa_encrypt(msg, pubKey)
-print(enc)
-dec = rsa_decrypt(enc, privKey)
-print(dec)
+# msg = 'Apa kabar'
+# enc = rsa_encrypt(msg, pubKey)
+# print(enc)
+# dec = rsa_decrypt(enc, privKey)
+# print(dec)
 
 # rsa_enc_binary_file('../inputs/ESP32.png', pubKey)
 # rsa_dec_binary_file('../inputs/ESP32_rsa_encrypted.png', privKey)
