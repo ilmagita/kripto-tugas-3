@@ -96,8 +96,7 @@ def rsa_dec_binary_file(fileName,priKey):
 current_dir = os.path.dirname(os.path.abspath(__file__))
 # go back up one folder
 parent_dir = os.path.dirname(current_dir)
-chat_dir = os.path.join(parent_dir, 'chat')
-key_dir = os.path.join(chat_dir, 'key')
+key_dir = os.path.join(parent_dir, 'key')
 
 privKey_path = os.path.join(key_dir, 'key.pri')
 pubKey_path = os.path.join(key_dir, 'key.pub')
