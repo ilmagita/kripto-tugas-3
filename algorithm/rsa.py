@@ -123,13 +123,11 @@ def rsa_dec_binary_file(fileName, priKey):
     plain = int_array_to_binary_data(plain)
     save_binary_file(plain, f'{filename_ori}_rsa_decrypted{filename_type}')
 
-    # return plain
-
 # generate_key('ilma')
 # pubKey = read_key_file('ilma.pub')
 # privKey = read_key_file('ilma.pri')
 
-rsa_enc_binary_file('../inputs/ESP32.png', pubKey)
+# rsa_enc_binary_file('../inputs/ESP32.png', pubKey)
 # rsa_dec_binary_file('../inputs/ESP32_rsa_encrypted.png', privKey)
 
 #rsa_enc_text_file("tes.txt",pubKey)
