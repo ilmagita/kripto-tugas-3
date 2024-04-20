@@ -1,6 +1,6 @@
 import threading
 import socket
-from config import host, port
+from . config import host, port
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((host, port))
@@ -13,7 +13,7 @@ nicknames = []
 def broadcast(message):
     for client in clients:
         try:
-            client.send(message.encode('ascii'))
+            client.send(message.encode('utf-8'))
         except Exception as e:
             print('There was an error in broadcasting the message {}: {}'.format(message, e))
 
@@ -22,12 +22,13 @@ def handle(client):
     while True:
         try:
             message = client.recv(1024)
-            broadcast(message.decode('ascii'))
+            broadcast(message.decode('utf-8'))
         except:
             index = clients.index(client)
             clients.remove(client)
             client.close()
             nickname = nicknames[index]
+
             broadcast(f'{nickname} has left the chat.')
             broadcast(f'Online: {nicknames}')
             print(f'{nickname} has terminated the connection.')
@@ -41,15 +42,15 @@ def receive():
         print(f'New connection accepted from client in {str(address)}')
 
         if client:
-            client.send('NICK'.encode('ascii'))             # sends NICK to signal client to send its nickname
-            nickname = client.recv(1024).decode('ascii')
+            client.send('NICK'.encode('utf-8'))             # sends NICK to signal client to send its nickname
+            nickname = client.recv(1024).decode('utf-8')
             nicknames.append(nickname)
             clients.append(client)
 
             print(f'New client added: {nickname}')
             broadcast(f'{nickname} joined the chat.')
-            client.send('You have connected to the server!'.encode('ascii'))
-            client.send(f'\nCurrently online: {nicknames}'.encode('ascii'))
+            client.send('You have connected to the server!'.encode('utf-8'))
+            client.send(f'\nCurrently online: {nicknames}'.encode('utf-8'))
 
             thread = threading.Thread(target=handle, args=(client,))
             thread.start()
