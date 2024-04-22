@@ -90,12 +90,16 @@ def rsa_dec_binary_file(fileName,priKey):
     save_binary_file(plain, f'{filename_ori}_rsa_decrypted{filename_type}')
     return plain
 
+
+
 ## DIRECTORIES
 # get the directory of the current script
 current_dir = os.path.dirname(os.path.abspath(__file__))
 # go back up one folder
 parent_dir = os.path.dirname(current_dir)
 key_dir = os.path.join(parent_dir, 'key')
+
+generate_key('key')
 
 privKey_path = os.path.join(key_dir, 'key.pri')
 pubKey_path = os.path.join(key_dir, 'key.pub')
