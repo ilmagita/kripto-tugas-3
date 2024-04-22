@@ -29,46 +29,19 @@ def int_array_to_binary_data(array_of_integers):
     binary_data = bytes(array_of_integers)
     return binary_data
 
-"""""
-def binary_data_to_int_array(binary_data,min_binary_length):
-    bit_data = bin(int.from_bytes(binary_data, "big"))[2:]
-    array_of_bits = [bit_data[i:i+min_binary_length] for i in range(0,len(bit_data),min_binary_length)]
-    array_of_integers = [int(bits,2) for bits in array_of_bits]
-    sisa = len(bit_data)%min_binary_length
-    array_of_integers.append(sisa)
-    return array_of_integers
+def read_hex_file(file):
+    f = open(file,'r')
+    contents = f.read()
+    contents = contents.split('0x')
+    contents = contents[1:]
+    return (int('0x'+content,16) for content in contents)
 
-def int_array_to_binary_data(array_of_integers,max_binary_length):
-    bit_data = [format(val, f'0{max_binary_length}b') for val in array_of_integers]
-    bit_data = "".join(bit_data)
-    binary_data = int(bit_data,2)
-    binary_data = binary_data.to_bytes((len(bit_data) + 7) // 8, "big")
-    return binary_data
-
-
-def binary_data_to_arr_int_dec(binary_data,min_binary_length):
-    bit_data = bin(int.from_bytes(binary_data, "big"))[2:]
-    while len(bit_data) % min_binary_length !=0:
-        bit_data += '0'
-    array_of_bits = [bit_data[i:i+min_binary_length] for i in range(0,len(bit_data),min_binary_length)]
-    array_of_integers = [int(bits,2) for bits in array_of_bits]
-    sisa = len(bit_data)%min_binary_length
-    array_of_integers.append(sisa)
-    return array_of_integers
-
-def int_array_to_binary_data_dec(array_of_integers,max_binary_length):
-    bit_data = ''
-    for i, num in enumerate(array_of_integers):
-        if i != len(array_of_integers)-2:
-            bit_data += bin(num)[2:].zfill(max_binary_length)
-        else:
-            bit_data += bin(num)[2:].zfill(array_of_integers[-1])
-            break    
-    #bit_data = "".join(bit_data)
-    binary_data = int(bit_data,2)
-    binary_data = binary_data.to_bytes((len(bit_data) + 7) // 8, "big")
-    return binary_data
-"""""
+def save_hex_file(cipherText, fileName):
+    with open(fileName, 'w') as f:
+        bytes = ""
+        for value in cipherText:
+                bytes += (str(value))
+        f.write(bytes)
 
 def are_relatife_prime(a,b):
     gcd_val = gcd(a,b)
