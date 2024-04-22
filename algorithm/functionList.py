@@ -116,18 +116,3 @@ def get_base_file_name(filepath):
     basename_without_extension = os.path.splitext(filepath)[0]
     return basename_without_extension
     
-#print(read_key_file("ken1.pub"))
-
-
-#x = min_binary_length(12)
-#y = (max_binary_length(12))
-
-#input = b'd\xc8\x2c'
-#print(input)
-
-#int_array,bit_data=((binary_data_to_int_array(input,x)))
-#binary_data,bit_data2=(int_array_to_binary_data(int_array,y))
-
-#print(int_array)
-#print(binary_data)
-

@@ -106,11 +106,4 @@ pubKey_path = os.path.join(key_dir, 'key.pub')
 pubKey = read_key_file(privKey_path)
 privKey = read_key_file(pubKey_path)
 
-## TEST
-# file_path = os.path.join(parent_dir, 'tes.txt')
-# rsa_enc_text_file(file_path, pubKey)
-# dec_file_path = os.path.join(parent_dir, 'tes_rsa_encrypted.txt')
-# rsa_dec_text_file(dec_file_path, privKey)
-
-
     
