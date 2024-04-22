@@ -119,17 +119,15 @@ class Client:
         latest_msg = self.text_area.get('1.0', tkinter.END)
         self.text_area.config(state='disabled')
 
-        # Find the index of the last space
+        # find the index of the last space
         last_space_index = latest_msg.rfind(' ')
         cipher = latest_msg[last_space_index + 1:]
 
         dec = RSA.rsa_decrypt(cipher, privKey)
 
         dec_msg = f'Decrypted message: {dec}\n\n'
-        # test_msg = f'Latest message: {cipher}\n\n'
 
         self.text_area.config(state='normal')
-        # self.text_area.insert('end', test_msg)
         self.text_area.insert('end', dec_msg)
         self.text_area.yview('end')
         self.text_area.config(state='disabled')
