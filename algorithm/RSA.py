@@ -71,17 +71,17 @@ def rsa_enc_binary_file(fileName,pubKey):
     e,n = pubKey
     plain = binary_data_to_int_array(plain)
     # print(plain)
-    cipher = [(pow(num,e,n)) for num in plain]
+    cipher = [hex(pow(num,e,n)) for num in plain]
 
 
-    save_int_file(cipher, f'{filename_ori}_rsa_encrypted{filename_type}')
+    save_hex_file(cipher, f'{filename_ori}_rsa_encrypted{filename_type}')
     return cipher
 
 def rsa_dec_binary_file(fileName,priKey):
     filename_type = get_file_type(fileName)
     filename_ori = get_base_file_name(fileName)
     
-    cipher = read_int_file(fileName)
+    cipher = read_hex_file(fileName)
     d,n = priKey
     plain = [(pow(num,d,n)) for num in cipher]
     plain = int_array_to_binary_data(plain)
